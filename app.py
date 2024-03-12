@@ -15,7 +15,7 @@ app = App(token=SLACK_BOT_TOKEN)
 def handle_app_mention_events(body, logger, event, client, say):
 #   @musicer linkin park numb
     logger.info(body)
-    song = event['text'].split(app_id)[1].strip()
+    song = event['text'].split(APP_ID)[1].strip()
 
     if(song == ""):
         say(" @musicer linkin park numb\n@musicer stop")
