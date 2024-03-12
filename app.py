@@ -18,19 +18,27 @@ def handle_app_mention_events(body, logger, event, client, say):
     song = event['text'].split(APP_ID)[1].strip()
 
     if(song == ""):
-        say(" @musicer linkin park numb\n@musicer stop")
+        say(" @musicer linkin park numb\n@musicer /linkin park numb\n@musicer stop")
 
     elif(song.lower() == "stop"):
         cmd_yt = f"yt_select.sh ''"
         say(f"Stopped :musical_note:")
         subprocess.run(cmd_yt, shell=True)
     
+    elif("/" in song):
+        cmd_yt = f"yt_select.sh '/{song}'"
+        song = song.replace('/', '')
+        # print(cmd_yt, "\n")
+        say(f"Playing playlist :musical_note: - {song.upper()}")
+        subprocess.run(cmd_yt, shell=True,
+            # check=True, text=True
+        )
+
     else:
         cmd_yt = f"yt_select.sh '{song}'"
         # print(cmd_yt, "\n")
-        say(f"Playing :musical_note: - {song.upper()}")
+        say(f"Playing song :musical_note: - {song.upper()}")
         subprocess.run(cmd_yt, shell=True,
-            # check=True, text=True
         )
 
 # @app.command("/musicer")
