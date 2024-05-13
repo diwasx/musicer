@@ -1,55 +1,66 @@
+import os, subprocess
+import threading
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
-import os, subprocess
-import re
-
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
+from lib.queue_song import Queue_song
 from dotenv import load_dotenv
+from pprint import pp
 load_dotenv()
 
 APP_ID = os.environ["APP_ID"]
 SLACK_BOT_TOKEN = os.environ["SLACK_BOT_TOKEN"]
 SLACK_APP_TOKEN = os.environ["SLACK_APP_TOKEN"]
+CHANNEL_ID =  os.environ["CHANNEL_ID"]
 app = App(token=SLACK_BOT_TOKEN)
+client_ = WebClient(token=SLACK_BOT_TOKEN)
+maxsize = 5
 
 @app.event("app_mention")
 def handle_app_mention_events(body, logger, event, client, say):
-#   @musicer linkin park numb
     logger.info(body)
     song = event['text'].split(APP_ID)[1].strip()
+    user = f"<@{event['user']}>"
+
 
     if(song == ""):
-        say(" @musicer linkin park numb\n@musicer /linkin park numb\n@musicer stop")
+        say(f'''
+Hy, {user}
+@musicer linkin park numb -- Add song to queue
+@musicer info() -- Display queue
+@musicer skip() -- Skip song
+        ''')
 
-    elif(song.lower() == "stop"):
-        cmd_yt = f"yt_select.sh ''"
-        say(f"Stopped :musical_note:")
-        subprocess.run(cmd_yt, shell=True)
+    elif(song.lower() == "info()"):
+        say(":information_source: Queued Songs:\n"+str(q.info()).replace(", ", "\n"))
+
+    elif(song.lower() == "skip()"):
+        say(q.skip())
     
-    elif("/" in song):
-        cmd_yt = f"yt_select.sh '/{song}'"
-        song = song.replace('/', '')
-        # print(cmd_yt, "\n")
-        say(f"Playing playlist :musical_note: - {song.upper()}")
-        subprocess.run(cmd_yt, shell=True,
-            # check=True, text=True
-        )
-
     else:
-        cmd_yt = f"yt_select.sh '{song}'"
-        # print(cmd_yt, "\n")
-        say(f"Playing song :musical_note: - {song.upper()}")
-        subprocess.run(cmd_yt, shell=True,
-        )
+        if(len(q.info()) >= maxsize):
+            say(":interrobang: Queue Full")
+        else:
+            say(q.add(song, user))
 
-# @app.command("/musicer")
-# def repeat_text(ack, respond, command):
-#     ack()
-#     # /musicer linkin park numb
-#     song = command['text'] 
-#     respond(f"Playing {song}")
-#     cmd_yt = f"yt_select.sh '{song}'"
-#     subprocess.run(cmd_yt, shell=True)
 
 if __name__ == "__main__":
+    q = Queue_song(maxsize = maxsize)
+    def worker():
+        while True:
+            if(len(q.info()) > 0):
+                title_current = q.info()[0]
+                try:
+                    result = client_.chat_postMessage(
+                        channel=CHANNEL_ID,
+                        text = ":arrow_forward: "+title_current
+                    )
+                except SlackApiError as e:
+                    print(f"Error: {e}")
+            item = q.pop()
+
+    threading.Thread(target=worker, daemon=True).start()
     handler = SocketModeHandler(app, SLACK_APP_TOKEN)
     handler.start()
+
