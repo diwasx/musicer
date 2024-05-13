@@ -1,3 +1,15 @@
+Brotli==1.1.0
+certifi==2024.2.2
+charset-normalizer==3.3.2
+idna==3.7
+mutagen==1.47.0
+pafy==0.5.5
+pycryptodomex==3.20.0
 python-dotenv==1.0.1
+python-vlc==3.0.20123
+requests==2.31.0
 slack-bolt==1.18.1
 slack_sdk==3.27.1
+urllib3==2.2.1
+websockets==12.0
+yt-dlp==2024.4.9
