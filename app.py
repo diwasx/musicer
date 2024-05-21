@@ -80,8 +80,8 @@ if __name__ == "__main__":
     def worker_r():
         t_s = time.time()
         t_p = time.time()
-        diff_ = random.randint(600, 900)
-        tp_diff = diff_
+        diff_ = (600, 900)
+        tp_diff = random.randint(*diff_) 
 
         while True: 
             if(len(q.info())>0):
@@ -108,7 +108,7 @@ if __name__ == "__main__":
                 except SlackApiError as e:
                     print(f"Error: {e}")
                 t_p = time.time()
-                tp_diff = diff_
+                tp_diff = random.randint(*diff_)
 
             time.sleep(5)
 
