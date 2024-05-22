@@ -87,7 +87,7 @@ if __name__ == "__main__":
             if(len(q.info())>0):
                 t_s = time.time()
 
-            if(time.time() - t_s >= 120):
+            elif(time.time() - t_s >= 120):
                 try:
                     result = client_.chat_postMessage(
                         channel=CHANNEL_ID,
