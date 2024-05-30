@@ -53,7 +53,7 @@ Hy, {user}
         say(":information_source: Queued Songs:\n"+str(q.info()).replace(", ", "\n"))
 
     elif(song.lower() == "skip()"):
-        say(q.skip())
+        q.skip()
     
     else:
         if(len(q.info()) >= MAXSIZE):
@@ -78,6 +78,7 @@ if __name__ == "__main__":
             item = q.pop()
 
     def worker_r():
+        t_sp_refresh = time.time()
         t_s = time.time()
         t_p = time.time()
         diff_ = (600, 900)
@@ -88,6 +89,12 @@ if __name__ == "__main__":
                 t_s = time.time()
 
             elif(time.time() - t_s >= 120):
+
+                ''' Refresh Spotify Token because it expires after 1 hour'''
+                if(time.time() - t_sp_refresh >= 3300):
+                    q.spotify_auth()
+                    t_sp_refresh = time.time()
+
                 try:
                     result = client_.chat_postMessage(
                         channel=CHANNEL_ID,

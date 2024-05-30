@@ -39,6 +39,7 @@ def worker_q():
         q.pop()
 
 def worker_r():
+    t_sp_refresh = time.time()
     t_s = time.time()
     t_p = time.time()
     tp_diff = random.randint(300, 600)
@@ -51,6 +52,12 @@ def worker_r():
             t_s = time.time()
 
         if(time.time() - t_s >= 120):
+
+            ''' Refresh Spotify Token because it expire after 1 hour'''
+            if(time.time() - t_sp_refresh >= 150):
+                q.spotify_auth()
+                t_sp_refresh = time.time()
+
             q.add(q.spotify(), "MR ROBOT")
             t_s = time.time()
 

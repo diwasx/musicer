@@ -1,8 +1,11 @@
-import os, requests
+import os, requests, sys
 from dotenv import load_dotenv
 from pprint import pp
 import time, random, ast
 load_dotenv()
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
 
 def get_spotify_token():
     ''' GET RANDOM SONGS FROM THE SELECTED PLAYLIST '''
@@ -18,6 +21,8 @@ def get_spotify_token():
     }
 
     auth_response = requests.post(auth_url, data=data)
+    print("SPOTIFY TOKEN REFRESHED")
+    eprint("SPOTIFY TOKEN REFRESHED")
     access_token = auth_response.json().get('access_token')
     return(access_token)
 
@@ -32,7 +37,11 @@ def spotify_random(token):
     playlists = ast.literal_eval(os.environ["SPOTIFY_PLAYLIST"])
     pl_endpoint = random.choice(playlists)
     pl_url = ''.join([base_url,pl_endpoint])
-    response = requests.get(pl_url,headers=headers)
+
+    try:
+        response = requests.get(pl_url,headers=headers)
+    except requests.exceptions as e: 
+        print(e)
 
     songs = []
     for r in response.json()['tracks']['items']:

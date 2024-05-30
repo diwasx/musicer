@@ -1,4 +1,4 @@
-import os, subprocess, threading
+import os, subprocess, threading, sys
 from queue import Queue
 import lib.spotify_api as spo
 import lib.pickup_lines as pl
@@ -8,8 +8,13 @@ class Queue_song:
 
     def __init__(self, maxsize):
         self.q = Queue(maxsize = maxsize)
-        self.spotify_token = spo.get_spotify_token()
+        self.spotify_auth()
 
+    def eprint(*args, **kwargs):
+        print(*args, file=sys.stderr, **kwargs)
+
+    def spotify_auth(self):
+        self.spotify_token = spo.get_spotify_token()
 
     def info(self):
         '''Return Queue list'''
@@ -72,7 +77,11 @@ class Queue_song:
 
     def skip(self):
         ''' Skip current song '''
-        self.e.set()
+        if hasattr(self, 'e'):
+            self.e.set()
+        else:
+            print("Nothing to skip")
+            self.eprint("Nothing to skip")
 
     def spotify(self):
         ''' GET RANDOM SONGS FROM THE SELECTED PLAYLIST '''

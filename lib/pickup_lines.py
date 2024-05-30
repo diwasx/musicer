@@ -6,12 +6,8 @@ load_dotenv()
 
 gajal = ast.literal_eval(os.environ["GAJAL"])
 
-
 def pickup_random(user1_id, user1_name, user2_id):
     ''' GET RANDOM PICKUP LINES '''
-
-    pp(gajal)
-    pp(user1_name)
 
     text = ""
     while(text == ""):
@@ -20,10 +16,11 @@ def pickup_random(user1_id, user1_name, user2_id):
                 if(x in user1_name.lower()):
                     text = random.choice(gajal[x])
         else:
-            base_url = 'https://rizzapi.vercel.app/random'
-            response = requests.get(base_url)
-
-            text = response.json()['text']
+            texts = []
+            with open('lib/pickup_lines.txt', 'r') as fh:
+                for line in fh:
+                    texts.append(line)
+            text = random.choice(texts)
 
         if(random.randint(0,1) == 0):
             text_f = user2_id+" says: Hy "+user1_id+", "+text
