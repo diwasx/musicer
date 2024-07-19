@@ -216,7 +216,6 @@ Do you know what’s on the menu? Me-n-u.
 Do you like blueberries or strawberries, ’cause I want to know what kind of pancakes to order in the morning.
 Do you like raisins? How do you feel about a date?
 Do you like science? Because i’ve got my ion you.
-Do you like soda? Because I’d mount-and-do you. (Mountain Dew)
 Do you like Star Wars? Because Yoda only one for me!
 Do you like to be numerator or denominator?
 Do you play soccer? Because you’re a keeper!
@@ -332,8 +331,6 @@ I heard you're sin because you're always on top when we make tangent.
 I hope someday to be your emergency contact.
 I hope you know CPR, because you are taking my breath away!
 I hope you know first aid, because you are taking my breath away.
-I hope you're an ISO file, because I'd like to mount you.
-I hope you’re not a vegetarian, because I’d love to meat you.
 I just got dumped, and I think that you could make me feel better.
 I just had to come talk with you. Sweetness is my weakness
 I just had to tell you, your beauty made me truly appreciate being able to see.',
@@ -488,7 +485,7 @@ If I move my lips half the distance to yours… and then half  again… and agai
 If I said you had a monoclonal antibody, would you hold it against me?
 If I was a stoplight, everytime you came by I’d turn red, just to stare at you longer.
 If I was an endoplasmic reticulum, how would you want me: smooth or rough?
-If I was an octopus, all my 3 hearts would beat for you﻿.
+If I was an octopus, all my 3 hearts would beat for you
 If I was sin^2 and you were cos^2 together we would be 1
 If I were a cat i’d spend all 9 lives with you.
 If I were a cat, I'd spend all nine of my lives with you.,
@@ -498,7 +495,6 @@ If I were God, all of my angels would look like you.
 If I were to ask you out on a date, would your answer be the same as the answer to this question?
 If I’d follow you home, would you keep me?
 If Internet Explorer is brave enough to ask you to be your default browser, I’m brave enough to ask you out!
-If it’s true that we are what we eat, then I could be you by tomorrow morning.
 If kisses were crowns you would be the queen of my heart
 If my right leg is the cell wall and my left the membrane, do you want to be the cytoplasm?
 If my right leg was Christmas and my left was Easter, would you like to spend some time between the holidays?
